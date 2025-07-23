@@ -7,44 +7,27 @@ try {
     enabled: process.env.ANALYZE === 'true',
   })
 } catch (error) {
-  // Bundle analyzer not available (likely in production), use identity function
+  // Bundle analyzer not available, use identity function
   withBundleAnalyzer = config => config
 }
 
 const nextConfig = {
-  reactStrictMode: false, // Disable to avoid map issues
+  // Disable React strict mode to avoid map issues
+  reactStrictMode: false,
 
-  // Production optimizations
+  // Essential for production builds
   compress: true,
   poweredByHeader: false,
 
-  // Image optimization
+  // Image optimization - keep simple for Netlify
   images: {
-    formats: ['image/webp', 'image/avif'],
+    formats: ['image/webp'],
     minimumCacheTTL: 60,
   },
 
-  // Headers for security and performance
+  // Disable custom headers (handled by netlify.toml)
   async headers() {
-    return [
-      {
-        source: '/(.*)',
-        headers: [
-          {
-            key: 'X-Content-Type-Options',
-            value: 'nosniff',
-          },
-          {
-            key: 'X-Frame-Options',
-            value: 'DENY',
-          },
-          {
-            key: 'X-XSS-Protection',
-            value: '1; mode=block',
-          },
-        ],
-      },
-    ]
+    return []
   },
 }
 
