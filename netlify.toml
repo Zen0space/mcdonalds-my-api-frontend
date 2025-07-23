@@ -1,0 +1,96 @@
+# Netlify configuration for McDonald's Malaysia Frontend
+
+[build]
+  # Build command for Next.js
+  command = "npm run build"
+
+  # Directory to publish (Next.js output)
+  publish = ".next"
+
+[build.environment]
+  # Node version for builds
+  NODE_VERSION = "18"
+
+  # Production API URL
+  NEXT_PUBLIC_API_URL = "https://mcdonalds-malaysia-api.onrender.com"
+
+  # Enable Next.js runtime
+  NETLIFY_NEXT_PLUGIN_SKIP = "false"
+
+# Production context specific settings
+[context.production.environment]
+  NEXT_PUBLIC_API_URL = "https://mcdonalds-malaysia-api.onrender.com"
+  NODE_ENV = "production"
+
+# Deploy preview context
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_API_URL = "https://mcdonalds-malaysia-api.onrender.com"
+  NODE_ENV = "development"
+
+# Branch deploy context
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_API_URL = "https://mcdonalds-malaysia-api.onrender.com"
+  NODE_ENV = "development"
+
+# Headers for security and performance
+[[headers]]
+  for = "/*"
+  [headers.values]
+    # Security headers
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+    # CORS headers for API requests
+    Access-Control-Allow-Origin = "*"
+
+    # Cache control for static assets
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/"
+  [headers.values]
+    # Don't cache the main page
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    # API routes should not be cached
+    Cache-Control = "no-cache, no-store, must-revalidate"
+
+# Redirects and rewrites
+[[redirects]]
+  from = "/api/*"
+  to = "https://mcdonalds-malaysia-api.onrender.com/api/:splat"
+  status = 200
+  force = true
+  [redirects.headers]
+    X-From = "Netlify"
+
+# Handle client-side routing for Next.js
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+  [redirects.conditions]
+    Role = ["admin"]
+
+# Plugins
+[[plugins]]
+  # Essential Next.js plugin for Netlify
+  package = "@netlify/plugin-nextjs"
+
+# Functions configuration (if using Netlify Functions)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Development settings
+[dev]
+  command = "npm run dev"
+  port = 8888
+  targetPort = 3000
+  publish = ".next"
+  autoLaunch = true
