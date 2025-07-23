@@ -19,6 +19,7 @@
     "netlify:deploy": "netlify deploy --prod"
   },
   "dependencies": {
+    "@netlify/functions": "^4.1.14",
     "@netlify/plugin-nextjs": "^5.11.6",
     "@next/bundle-analyzer": "^15.3.5",
     "axios": "^1.10.0",
