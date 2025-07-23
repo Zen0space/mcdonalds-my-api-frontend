@@ -1,491 +1,346 @@
-# McDonald's Malaysia Frontend
+# 🍟 McDonald's Malaysia Frontend
 
-A modern React/Next.js frontend application that provides an interactive map interface and intelligent chatbot for finding McDonald's outlets in Malaysia.
+A modern, responsive web application for finding McDonald's outlets in Malaysia with AI-powered chatbot assistance and interactive mapping capabilities.
 
-## 🚀 Features
+![Next.js](https://img.shields.io/badge/Next.js-15.1.3-black)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-3.4.17-38B2AC)
+![Leaflet](https://img.shields.io/badge/Leaflet-1.9.4-green)
 
-- **Interactive Map** with Leaflet.js showing all McDonald's outlets
-- **Location-based Search** with GPS integration
-- **Intelligent Chatbot** powered by Gemini 2.5 Flash
-- **Real-time Location Detection** with automatic permission handling
-- **Beautiful UI/UX** with McDonald's brand colors and modern design
-- **Responsive Design** optimized for desktop and mobile
-- **Intersection Analysis** showing overlapping outlet coverage areas
-- **Advanced Filtering** by features, operating hours, and distance
+## 🌟 Features
 
-## 📋 Prerequisites
+### 🗺️ Interactive Map
+- **Real-time outlet locations** with GPS coordinates
+- **5km radius visualization** for intersection analysis
+- **Responsive markers** with detailed outlet information
+- **Zoom controls** and map interaction
+- **Geolocation integration** for finding nearby outlets
 
-- **Node.js 18+** (Recommended: Node.js 20+)
-- **npm** or **yarn** package manager
-- **Modern Web Browser** with geolocation support
-- **Backend API** running (see backend README)
+### 🤖 AI Chatbot
+- **Google Gemini 2.5 Flash** powered assistant
+- **Natural language queries** in English and Bahasa Malaysia
+- **Location-based search** ("Find McDonald's near KLCC")
+- **Operating hours information**
+- **Waze navigation links**
+- **Multi-session support**
 
-## 🛠️ Installation
+### 🔍 Advanced Search & Filtering
+- **Text search** across outlet names and addresses
+- **Feature filtering** (24hrs, Drive-Thru, McCafe)
+- **Nearby search** with configurable radius
+- **Real-time results** with distance calculations
 
-### 1. Clone and Navigate
-```bash
-git clone <repository-url>
-cd geolocation-mcdscraper/frontend
-```
+### 📱 Responsive Design
+- **Mobile-first approach** with touch-friendly interface
+- **Progressive Web App** capabilities
+- **Dark/Light mode** support
+- **Accessibility features** (WCAG compliant)
 
-### 2. Install Dependencies
-```bash
-# Using npm
-npm install
+## 🚀 Tech Stack
 
-# Or using yarn
-yarn install
-```
+### Frontend
+- **[Next.js 15.1.3](https://nextjs.org)** - React framework with App Router
+- **[TypeScript](https://www.typescriptlang.org)** - Type-safe JavaScript
+- **[Tailwind CSS](https://tailwindcss.com)** - Utility-first CSS framework
+- **[Leaflet](https://leafletjs.com)** - Interactive map library
 
-### 3. Frontend Environment Setup
-Create a `.env.local` file in the frontend directory:
-```bash
-# Copy the example environment file
-cp env.example .env.local
-```
+### Backend Integration
+- **REST API** - McDonald's Malaysia API
+- **Axios** - HTTP client with interceptors
+- **Real-time chat** - WebSocket-ready architecture
 
-Edit `.env.local` with your configuration (usually no changes needed):
-```env
-# Backend API Configuration
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8000
+### Deployment
+- **[Netlify](https://netlify.com)** - Automated deployment and hosting
+- **GitHub Actions** - CI/CD pipeline
+- **Edge functions** - Serverless API endpoints
 
-# Map Configuration (optional)
-NEXT_PUBLIC_MAP_CENTER_LAT=3.1570
-NEXT_PUBLIC_MAP_CENTER_LNG=101.7123
-NEXT_PUBLIC_MAP_ZOOM=11
-```
+## 📦 Quick Start
 
-**Note**: Main environment variables (Gemini API key, database config) are configured in the project root directory. See the [main README](../README.md) for complete environment setup instructions.
+### Prerequisites
+- Node.js 18+ 
+- npm or yarn
+- Git
 
-## 🚀 Quick Start
+### Installation
 
-### 1. Start Development Server
-```bash
-# Using npm
-npm run dev
+1. **Clone the repository**
+   ```bash
+   git clone git@github.com:Zen0space/mcdonalds-my-api-frontend.git
+   cd mcdonalds-my-api-frontend
+   ```
 
-# Or using yarn
-yarn dev
-```
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-### 2. Access the Application
-- **Application**: http://localhost:3000
-- **Map Interface**: Interactive map with all outlets
-- **Chatbot**: Click the floating chat button
+3. **Set up environment variables**
+   ```bash
+   cp env.example .env.local
+   ```
+   
+   Edit `.env.local`:
+   ```env
+   NEXT_PUBLIC_API_URL=https://mcdonalds-malaysia-api.onrender.com
+   ```
 
-### 3. Build for Production
-```bash
-# Build the application
-npm run build
+4. **Run development server**
+   ```bash
+   npm run dev
+   ```
 
-# Start production server
-npm start
-```
+5. **Open in browser**
+   ```
+   http://localhost:3000
+   ```
 
-## 🗂️ Project Structure
-
-```
-frontend/
-├── src/
-│   ├── app/                    # Next.js 13+ App Router
-│   │   ├── globals.css         # Global styles
-│   │   ├── layout.tsx          # Root layout component
-│   │   └── page.tsx            # Main page component
-│   ├── components/             # React components
-│   │   ├── chat/               # Chatbot components
-│   │   │   ├── ChatHeader.tsx          # Chat header with location
-│   │   │   ├── ChatInput.tsx           # Message input with Enter support
-│   │   │   ├── ChatMessages.tsx        # Message display container
-│   │   │   ├── ChatPanel.tsx           # Main chat panel
-│   │   │   ├── FloatingChatbot.tsx     # Floating chat button
-│   │   │   ├── LocationCard.tsx        # McDonald's outlet cards
-│   │   │   ├── MessageBubble.tsx       # Individual message bubbles
-│   │   │   └── TypingIndicator.tsx     # Chat typing animation
-│   │   ├── ErrorBoundary.tsx   # Error handling component
-│   │   ├── IntersectionLegend.tsx      # Map legend component
-│   │   ├── LoadingSpinner.tsx  # Loading animation
-│   │   ├── LocationButton.tsx  # GPS location button
-│   │   ├── Map.tsx             # Interactive Leaflet map
-│   │   └── MapControls.tsx     # Map control panel
-│   ├── hooks/                  # Custom React hooks
-│   │   ├── useChatSession.ts   # Chat session management
-│   │   └── useGeolocation.ts   # GPS location handling
-│   ├── services/               # API and external services
-│   │   └── chatApi.ts          # Backend API communication
-│   ├── types/                  # TypeScript type definitions
-│   │   ├── chat.ts             # Chat-related types
-│   │   └── index.ts            # Common types
-│   └── utils/                  # Utility functions
-│       ├── distance.ts         # Distance calculations
-│       ├── logger.ts           # Logging utilities
-│       └── outletParser.ts     # McDonald's data parsing
-├── public/                     # Static assets
-├── package.json               # Dependencies and scripts
-├── next.config.js             # Next.js configuration
-├── tsconfig.json              # TypeScript configuration
-├── tailwind.config.js         # Tailwind CSS configuration
-└── env.example                # Environment template
-```
-
-## 🎨 Key Components
-
-### **Interactive Map (`Map.tsx`)**
-- **Leaflet.js Integration**: High-performance mapping
-- **Custom Markers**: McDonald's branded markers with hover effects
-- **Radius Visualization**: 5KM coverage circles
-- **Intersection Analysis**: Overlapping outlet detection
-- **Click Interactions**: Select outlets for detailed view
-
-### **Intelligent Chatbot (`chat/`)**
-- **FloatingChatbot**: Always-accessible chat interface
-- **LocationCard**: Beautiful outlet information cards
-- **Auto-location**: Automatic GPS detection and usage
-- **Real-time Responses**: Powered by Gemini 2.5 Flash
-- **Enter to Send**: Modern chat UX with keyboard shortcuts
-
-### **Location Services (`hooks/useGeolocation.ts`)**
-- **GPS Integration**: Browser geolocation API
-- **Permission Handling**: Graceful permission requests
-- **Error Management**: User-friendly error messages
-- **Auto-detection**: Automatic location for chat queries
-
-### **Chat Session Management (`hooks/useChatSession.ts`)**
-- **Session Persistence**: Maintain chat history
-- **Location Integration**: Automatic location sharing
-- **Message Management**: Send, receive, and display messages
-- **Error Handling**: Robust error recovery
-
-## 🔧 Configuration
-
-### Frontend Environment Variables
+## ⚙️ Environment Variables
 
 | Variable | Description | Default | Required |
 |----------|-------------|---------|----------|
-| `NEXT_PUBLIC_API_BASE_URL` | Backend API URL | `http://localhost:8000` | Yes |
-| `NEXT_PUBLIC_MAP_CENTER_LAT` | Default map center latitude | `3.1570` | No |
-| `NEXT_PUBLIC_MAP_CENTER_LNG` | Default map center longitude | `101.7123` | No |
-| `NEXT_PUBLIC_MAP_ZOOM` | Default map zoom level | `11` | No |
-| `NEXT_PUBLIC_APP_NAME` | Application name | `McDonald's Malaysia Map` | No |
-| `NEXT_PUBLIC_APP_DESCRIPTION` | App description for SEO | - | No |
-| `NODE_ENV` | Environment mode | `development` | No |
+| `NEXT_PUBLIC_API_URL` | Backend API URL | `http://localhost:8000` | ✅ |
+| `NODE_ENV` | Environment mode | `development` | ⚠️ |
 
-### Map Configuration
+## 🔗 API Integration
 
-The map is configured for Kuala Lumpur, Malaysia by default:
-- **Center**: KLCC coordinates (3.1570, 101.7123)
-- **Zoom**: City-level view (11)
-- **Tiles**: CartoDB Voyager for clean appearance
-- **Markers**: Custom McDonald's branded icons
+### Backend API
+- **Base URL**: `https://mcdonalds-malaysia-api.onrender.com`
+- **Documentation**: `/docs` endpoint
+- **Health Check**: `/health` endpoint
 
-### Chat Configuration
+### Available Endpoints
+```bash
+# Outlets
+GET /api/v1/outlets              # List all outlets
+GET /api/v1/outlets/{id}         # Get outlet by ID
+GET /api/v1/outlets/nearby       # Find nearby outlets
+GET /api/v1/outlets/search       # Search outlets
 
-- **Auto-location**: Enabled by default
-- **Session Management**: Automatic session creation
-- **Message History**: Persisted during session
-- **Enter to Send**: Enabled for better UX
+# Chat
+POST /api/v1/chat/session        # Create chat session
+POST /api/v1/chat/message        # Send message
+GET /api/v1/chat/history/{id}    # Get chat history
+DELETE /api/v1/chat/session/{id} # Delete session
 
-## 🎨 Styling and Theming
-
-### Tailwind CSS
-The application uses Tailwind CSS for styling with custom McDonald's branding:
-
-```css
-/* Custom McDonald's colors */
-.bg-mcd-red { background-color: #DA291C; }
-.text-mcd-red { color: #DA291C; }
-.bg-mcd-yellow { background-color: #FFC72C; }
+# Statistics
+GET /api/v1/stats                # Database statistics
 ```
 
-### Component Styling
-- **Clean Design**: Modern, minimal interface
-- **Brand Colors**: Official McDonald's red and yellow
-- **Responsive**: Mobile-first responsive design
-- **Accessibility**: WCAG compliant color contrasts
+## 🏗️ Project Structure
 
-## 🧪 Testing and Development
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── globals.css        # Global styles
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Home page
+├── components/            # React components
+│   ├── chat/             # Chat-related components
+│   ├── ApiStatus.tsx     # API health indicator
+│   ├── Map.tsx           # Interactive map
+│   └── ...               # Other components
+├── hooks/                # Custom React hooks
+│   ├── useChatSession.ts # Chat functionality
+│   └── useGeolocation.ts # Location services
+├── services/             # API services
+│   ├── api.ts           # Main API configuration
+│   ├── chat.ts          # Chat service
+│   └── outlets.ts       # Outlets service
+├── types/               # TypeScript definitions
+├── utils/               # Utility functions
+│   ├── apiMonitor.ts    # API monitoring
+│   ├── distance.ts      # Geolocation calculations
+│   └── testConnection.ts # Connection testing
+└── ...
+```
 
-### Development Scripts
+## 🚀 Deployment
+
+### Netlify (Recommended)
+
+1. **Connect to GitHub**
+   - Login to [Netlify](https://app.netlify.com)
+   - Click "Add new site" → "Import an existing project"
+   - Connect your GitHub repository
+
+2. **Configure build settings**
+   - Build command: `npm run build`
+   - Publish directory: `.next`
+   - Environment variables: `NEXT_PUBLIC_API_URL`
+
+3. **Deploy**
+   - Click "Deploy site"
+   - Your site will be available at a Netlify URL
+
+### Manual Deployment
+
 ```bash
-# Start development server
-npm run dev
-
-# Build for production
+# Build the project
 npm run build
 
-# Start production server
-npm start
-
-# Type checking
-npm run type-check
-
-# Linting
-npm run lint
-npm run lint:check
-
-# Code formatting
-npm run format
-npm run format:check
-
-# Bundle analysis
-npm run analyze
+# Deploy to Netlify CLI
+npm install -g netlify-cli
+netlify login
+netlify deploy --prod
 ```
 
-### Manual Testing
+## 🧪 Testing & Development
 
-#### 1. Map Functionality
-- Load the application at http://localhost:3000
-- Verify all McDonald's markers appear
-- Test marker clicks and popups
-- Check radius circles toggle
-- Test outlet selection and clearing
+### Available Scripts
 
-#### 2. Location Services
-- Allow location permission when prompted
-- Verify automatic location detection
-- Test manual location button
-- Check location integration with chat
+```bash
+# Development
+npm run dev              # Start development server
+npm run build           # Build for production
+npm run start           # Start production server
 
-#### 3. Chatbot Functionality
-- Open the floating chat interface
-- Test message sending with Enter key
-- Verify location-based queries work
-- Check outlet card display in chat responses
-- Test Waze button functionality
+# Code Quality
+npm run lint            # Run ESLint
+npm run lint:check      # Check linting without fixing
+npm run format          # Format code with Prettier
+npm run format:check    # Check formatting
+npm run type-check      # TypeScript type checking
 
-#### 4. Responsive Design
-- Test on different screen sizes
-- Verify mobile responsiveness
-- Check touch interactions on mobile
-- Test landscape/portrait orientations
+# Testing
+npm run test:connection # Test API connection
+```
 
-## 🚨 Troubleshooting
+### API Testing
+
+```bash
+# Test API health
+curl https://mcdonalds-malaysia-api.onrender.com/health
+
+# Test outlets endpoint
+curl https://mcdonalds-malaysia-api.onrender.com/api/v1/outlets?limit=5
+```
+
+### Browser Console Utilities
+
+Open browser console and use:
+
+```javascript
+// Test API connection
+testConnection.quick()
+
+// Run full connection tests
+testConnection.full()
+
+// Test specific service
+testConnection.service('chat')
+
+// Measure API latency
+testConnection.latency(10)
+```
+
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-#### 1. Map Not Loading
-```bash
-# Check if backend is running
-curl http://localhost:8000/health
+1. **ERR_CONNECTION_REFUSED**
+   - Check if API URL is correct in `.env.local`
+   - Verify backend is running
+   - Clear browser cache
 
-# Verify environment variables
-cat .env.local
+2. **Build Failures**
+   - Clear node_modules: `rm -rf node_modules && npm install`
+   - Check TypeScript errors: `npm run type-check`
 
-# Check console for errors
-# Open browser DevTools > Console
-```
+3. **Map Not Loading**
+   - Check browser console for errors
+   - Verify Leaflet CSS is loaded
+   - Check network requests
 
-#### 2. Location Permission Issues
-- **Chrome**: Settings > Privacy > Location
-- **Firefox**: Settings > Privacy & Security > Permissions
-- **Safari**: Preferences > Websites > Location
-- **Edge**: Settings > Site permissions > Location
-
-#### 3. Chat Not Working
-```bash
-# Verify backend API is running
-curl http://localhost:8000/api/chat/sessions
-
-# Check environment variables
-echo $NEXT_PUBLIC_API_BASE_URL
-
-# Check browser console for errors
-```
-
-#### 4. Build Errors
-```bash
-# Clear Next.js cache
-rm -rf .next
-
-# Reinstall dependencies
-rm -rf node_modules package-lock.json
-npm install
-
-# Check TypeScript errors
-npm run type-check
-```
-
-### Browser Compatibility
-
-| Browser | Version | Status |
-|---------|---------|--------|
-| Chrome | 90+ | ✅ Fully Supported |
-| Firefox | 88+ | ✅ Fully Supported |
-| Safari | 14+ | ✅ Fully Supported |
-| Edge | 90+ | ✅ Fully Supported |
-| Mobile Safari | iOS 14+ | ✅ Fully Supported |
-| Chrome Mobile | Android 90+ | ✅ Fully Supported |
+4. **Chat Not Working**
+   - Backend database might be down (500 errors)
+   - Check API status at `/health` endpoint
+   - Clear chat session and retry
 
 ### Performance Optimization
 
-#### 1. Bundle Size
-```bash
-# Analyze bundle size
-npm run analyze
+- **Lazy loading** for map components
+- **Image optimization** with Next.js
+- **Bundle analysis** with `npm run analyze`
+- **Lighthouse** performance audits
 
-# Check for large dependencies
-npx bundle-analyzer .next/static/chunks/*.js
+## 📝 API Documentation
+
+### Chat API Usage
+
+```javascript
+import { chatService } from '@/services/chat'
+
+// Create session
+const session = await chatService.createSession()
+
+// Send message
+const response = await chatService.sendMessage({
+  session_id: session.session_id,
+  message: "Find McDonald's near KLCC",
+  user_location: { lat: 3.1570, lng: 101.7123 }
+})
+
+// Get history
+const history = await chatService.getHistory(session.session_id)
 ```
 
-#### 2. Map Performance
-- **Marker Clustering**: Automatically handled for large datasets
-- **Lazy Loading**: Components loaded on demand
-- **Memory Management**: Proper cleanup of map instances
+### Outlets API Usage
 
-#### 3. Chat Performance
-- **Message Batching**: Efficient message rendering
-- **Session Management**: Optimized state updates
-- **API Caching**: Intelligent response caching
+```javascript
+import { outletService } from '@/services/outlets'
 
-## 🔄 Development Workflow
+// Get all outlets
+const outlets = await outletService.getOutlets()
 
-### 1. Local Development
-```bash
-# Start backend (in backend directory)
-cd ../backend
-python main.py
+// Search outlets
+const results = await outletService.searchOutlets({
+  q: "KLCC",
+  limit: 10
+})
 
-# Start frontend (in frontend directory)
-cd ../frontend
-npm run dev
+// Find nearby
+const nearby = await outletService.getNearbyOutlets({
+  lat: 3.1570,
+  lng: 101.7123,
+  radius: 2
+})
 ```
 
-### 2. Adding New Features
+## 🤝 Contributing
 
-#### New Chat Features
-1. Add components in `src/components/chat/`
-2. Update chat types in `src/types/chat.ts`
-3. Extend chat service in `src/hooks/useChatSession.ts`
+1. **Fork the repository**
+2. **Create feature branch**: `git checkout -b feature/amazing-feature`
+3. **Commit changes**: `git commit -m 'Add amazing feature'`
+4. **Push to branch**: `git push origin feature/amazing-feature`
+5. **Open Pull Request**
 
-#### New Map Features
-1. Extend `src/components/Map.tsx`
-2. Add controls in `src/components/MapControls.tsx`
-3. Update types in `src/types/index.ts`
+### Development Guidelines
 
-#### New API Integration
-1. Add service functions in `src/services/`
-2. Create custom hooks in `src/hooks/`
-3. Update TypeScript types
-
-### 3. Code Quality
-```bash
-# Format code
-npm run format
-
-# Check linting
-npm run lint
-
-# Type checking
-npm run type-check
-
-# Run all checks
-npm run lint && npm run type-check && npm run build
-```
-
-## 🚀 Production Deployment
-
-### Build Optimization
-```bash
-# Production build
-npm run build
-
-# Start production server
-npm start
-
-# Or export static files
-npm run build && npm run export
-```
-
-### Environment Variables for Production
-```env
-NODE_ENV=production
-NEXT_PUBLIC_API_BASE_URL=https://your-api-domain.com
-NEXT_PUBLIC_MAP_CENTER_LAT=3.1570
-NEXT_PUBLIC_MAP_CENTER_LNG=101.7123
-```
-
-### Deployment Options
-
-#### 1. Vercel (Recommended)
-```bash
-# Install Vercel CLI
-npm i -g vercel
-
-# Deploy
-vercel --prod
-```
-
-#### 2. Netlify
-```bash
-# Build command: npm run build
-# Publish directory: out (if using export)
-```
-
-#### 3. Docker
-```dockerfile
-FROM node:18-alpine
-
-WORKDIR /app
-COPY package*.json ./
-RUN npm ci --only=production
-
-COPY . .
-RUN npm run build
-
-EXPOSE 3000
-CMD ["npm", "start"]
-```
-
-## 📱 Mobile Experience
-
-### Progressive Web App (PWA)
-- **Installable**: Can be installed as a mobile app
-- **Offline Capable**: Basic functionality works offline
-- **Fast Loading**: Optimized for mobile networks
-- **Native Feel**: App-like experience on mobile devices
-
-### Mobile-Specific Features
-- **Touch Gestures**: Optimized touch interactions
-- **Responsive Design**: Adapts to all screen sizes
-- **Location Services**: GPS integration for mobile
-- **Performance**: Optimized for mobile devices
-
-## 📊 Analytics and Monitoring
-
-### Performance Monitoring
-```bash
-# Lighthouse audit
-npm install -g lighthouse
-lighthouse http://localhost:3000
-
-# Core Web Vitals
-# Check in browser DevTools > Lighthouse
-```
-
-### Error Monitoring
-- **Error Boundary**: Catches and displays React errors
-- **Console Logging**: Structured logging for debugging
-- **User Feedback**: Error messages guide user actions
-
-## 📞 Support
-
-### Getting Help
-1. **Check Console**: Browser DevTools for error messages
-2. **Verify Backend**: Ensure backend API is running
-3. **Main README**: See [project root README](../README.md) for main environment setup
-4. **Check Environment**: Verify `.env.local` configuration
-5. **Test Location**: Ensure location permissions are granted
-
-### Contributing
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/new-feature`
-3. Make your changes
-4. Test thoroughly: `npm run lint && npm run type-check && npm run build`
-5. Submit a pull request
+- Follow TypeScript best practices
+- Use ESLint and Prettier configurations
+- Write meaningful commit messages
+- Add tests for new features
+- Update documentation
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙏 Acknowledgments
+
+- **McDonald's Malaysia** for outlet data inspiration
+- **Google Gemini** for AI chat capabilities
+- **Leaflet** for mapping functionality
+- **Next.js** team for the amazing framework
+
+## 📞 Support
+
+- **Issues**: [GitHub Issues](https://github.com/Zen0space/mcdonalds-my-api-frontend/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Zen0space/mcdonalds-my-api-frontend/discussions)
+- **Email**: [Contact](mailto:your-email@example.com)
 
 ---
 
-**Enjoy exploring McDonald's outlets! 🍟🗺️** 
+**Made with ❤️ for the McDonald's Malaysia community**
+
+*Find your nearest McDonald's with ease! 🍟*
