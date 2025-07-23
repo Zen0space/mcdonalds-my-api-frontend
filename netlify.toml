@@ -20,17 +20,14 @@
 # Production context specific settings
 [context.production.environment]
   NEXT_PUBLIC_API_URL = "https://mcdonalds-malaysia-api.onrender.com"
-  NODE_ENV = "production"
 
 # Deploy preview context
 [context.deploy-preview.environment]
   NEXT_PUBLIC_API_URL = "https://mcdonalds-malaysia-api.onrender.com"
-  NODE_ENV = "development"
 
 # Branch deploy context
 [context.branch-deploy.environment]
   NEXT_PUBLIC_API_URL = "https://mcdonalds-malaysia-api.onrender.com"
-  NODE_ENV = "development"
 
 # Headers for security and performance
 [[headers]]

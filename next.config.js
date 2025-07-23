@@ -1,23 +1,29 @@
 /** @type {import('next').NextConfig} */
-const withBundleAnalyzer = require('@next/bundle-analyzer')({
-  enabled: process.env.ANALYZE === 'true',
-})
+
+// Conditionally load bundle analyzer only if available
+let withBundleAnalyzer
+try {
+  withBundleAnalyzer = require('@next/bundle-analyzer')({
+    enabled: process.env.ANALYZE === 'true',
+  })
+} catch (error) {
+  // Bundle analyzer not available (likely in production), use identity function
+  withBundleAnalyzer = config => config
+}
 
 const nextConfig = {
   reactStrictMode: false, // Disable to avoid map issues
-  
+
   // Production optimizations
   compress: true,
   poweredByHeader: false,
-  
 
-  
   // Image optimization
   images: {
     formats: ['image/webp', 'image/avif'],
     minimumCacheTTL: 60,
   },
-  
+
   // Headers for security and performance
   async headers() {
     return [
@@ -42,4 +48,4 @@ const nextConfig = {
   },
 }
 
-module.exports = withBundleAnalyzer(nextConfig) 
+module.exports = withBundleAnalyzer(nextConfig)
