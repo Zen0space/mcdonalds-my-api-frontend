@@ -13,6 +13,7 @@
     "type-check": "tsc --noEmit",
     "analyze": "ANALYZE=true npm run build",
     "test:connection": "node -e \"require('./src/utils/testConnection').runFullConnectionTest()\"",
+    "verify:deployment": "node scripts/verify-deployment.js",
     "deploy": "npm run build && echo 'Ready for Netlify deployment'",
     "netlify:build": "npm run build",
     "netlify:deploy": "netlify deploy --prod"
