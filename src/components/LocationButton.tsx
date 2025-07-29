@@ -1,3 +1,5 @@
+'use client'
+
 import React from 'react'
 import { useGeolocation } from '../hooks/useGeolocation'
 import { useChatSession } from '../hooks/useChatSession'

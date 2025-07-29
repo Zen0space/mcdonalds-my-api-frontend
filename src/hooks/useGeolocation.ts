@@ -18,6 +18,15 @@ export interface GeolocationOptions {
 
 // Browser-specific timeout settings for better compatibility
 const getBrowserOptimizedOptions = (): GeolocationOptions => {
+  // Check if we're in a browser environment
+  if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+    return {
+      enableHighAccuracy: true,
+      timeout: 15000, // Default timeout
+      maximumAge: 300000, // 5 minutes
+    }
+  }
+
   const isFirefox = navigator.userAgent.toLowerCase().includes('firefox')
   const isSafari =
     navigator.userAgent.toLowerCase().includes('safari') &&
@@ -57,7 +66,10 @@ export const useGeolocation = (
     location: null,
     isLoading: false,
     error: null,
-    isSupported: 'geolocation' in navigator,
+    isSupported:
+      typeof window !== 'undefined' &&
+      typeof navigator !== 'undefined' &&
+      'geolocation' in navigator,
     permission: 'unknown',
   })
 
@@ -100,6 +112,11 @@ export const useGeolocation = (
   // Check permission status on mount
   useEffect(() => {
     const checkPermission = async () => {
+      // Check if we're in a browser environment
+      if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+        return
+      }
+
       if (!navigator.permissions || !navigator.permissions.query) {
         console.warn('Permissions API not supported in this browser')
         setStateWithLogging(prev => ({ ...prev, permission: 'unknown' }))
@@ -129,6 +146,16 @@ export const useGeolocation = (
     useCallback(async (): Promise<UserLocation | null> => {
       const timestamp = new Date().toISOString()
       console.log(`🌍 [${timestamp}] useGeolocation: getCurrentLocation called`)
+
+      // Check if we're in a browser environment
+      if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+        const error = 'Geolocation is not available in server environment'
+        console.log(
+          `🌍 [${timestamp}] useGeolocation: Error - not in browser environment`
+        )
+        setStateWithLogging(prev => ({ ...prev, error }))
+        throw new Error(error)
+      }
 
       if (!state.isSupported) {
         const error = 'Geolocation is not supported by this browser'
