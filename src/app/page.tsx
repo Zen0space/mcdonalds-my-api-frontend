@@ -127,9 +127,11 @@ export default function Home() {
       setLoading(true)
 
       // First, fetch all outlets using the original method
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/outlets`
-      )
+      const apiUrl =
+        process.env.NODE_ENV === 'development'
+          ? '/api/v1/outlets' // Use Next.js proxy in development
+          : `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/outlets`
+      const response = await fetch(apiUrl)
       if (!response.ok) {
         throw new Error('Failed to fetch outlets')
       }

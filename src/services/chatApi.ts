@@ -9,7 +9,10 @@ import {
   SendMessageRequest,
 } from '../types/chat'
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+const API_BASE_URL =
+  process.env.NODE_ENV === 'development'
+    ? '' // Use Next.js proxy in development
+    : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 class ChatApiService {
   private baseUrl: string

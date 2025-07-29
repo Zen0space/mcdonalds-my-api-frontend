@@ -1,7 +1,10 @@
 import axios from 'axios'
 
-// Get API URL from environment variable with fallback to localhost
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
+// Get API URL from environment variable with fallback to proxy in development
+const API_BASE_URL =
+  process.env.NODE_ENV === 'development'
+    ? '' // Use Next.js proxy in development
+    : process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
 // Create axios instance with base configuration
 export const api = axios.create({

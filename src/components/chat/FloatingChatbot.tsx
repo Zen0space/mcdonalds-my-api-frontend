@@ -1,26 +1,26 @@
-'use client';
+'use client'
 
-import React from 'react';
-import ChatToggleButton from './ChatToggleButton';
-import ChatPanel from './ChatPanel';
-import { useChatSession } from '@/hooks/useChatSession';
+import React from 'react'
+import ChatToggleButton from './ChatToggleButton'
+import ChatPanel from './ChatPanel'
+import { useChatSession } from '@/hooks/useChatSession'
 
 const FloatingChatbot: React.FC = () => {
-  const chatSession = useChatSession();
+  const chatSession = useChatSession()
 
   return (
-    <div className="fixed bottom-0 right-0 z-[10000] pointer-events-none">
+    <div className="fixed bottom-0 left-0 right-0 md:left-auto md:right-0 z-[10000] pointer-events-none">
       <div className="pointer-events-auto">
         {chatSession.isOpen && (
-          <div className="mb-4">
-            <ChatPanel 
+          <div className="mb-4 mx-4 md:mx-0">
+            <ChatPanel
               chatSession={chatSession}
               onClose={chatSession.closeChat}
             />
           </div>
         )}
-        <div className="flex justify-end pr-6 pb-6">
-          <ChatToggleButton 
+        <div className="flex justify-center md:justify-end px-6 pb-6">
+          <ChatToggleButton
             isOpen={chatSession.isOpen}
             onClick={chatSession.toggleChat}
             hasUnreadMessages={false}
@@ -28,7 +28,7 @@ const FloatingChatbot: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default FloatingChatbot; 
+export default FloatingChatbot

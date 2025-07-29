@@ -1,14 +1,14 @@
-'use client';
+'use client'
 
-import React, { useEffect } from 'react';
-import MessageBubble from './MessageBubble';
-import TypingIndicator from './TypingIndicator';
-import { ChatMessage } from '@/types/chat';
+import React, { useEffect } from 'react'
+import MessageBubble from './MessageBubble'
+import TypingIndicator from './TypingIndicator'
+import { ChatMessage } from '@/types/chat'
 
 interface ChatMessagesProps {
-  messages: ChatMessage[];
-  isTyping: boolean;
-  messagesEndRef: React.RefObject<HTMLDivElement>;
+  messages: ChatMessage[]
+  isTyping: boolean
+  messagesEndRef: React.RefObject<HTMLDivElement>
 }
 
 const ChatMessages: React.FC<ChatMessagesProps> = ({
@@ -17,17 +17,20 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
   messagesEndRef,
 }) => {
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages, isTyping, messagesEndRef]);
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }, [messages, isTyping, messagesEndRef])
 
   return (
-    <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+    <div className="flex-1 overflow-y-auto p-2 md:p-4 space-y-2 md:space-y-4 bg-gray-50">
       {messages.length === 0 ? (
         <div className="flex flex-col items-center justify-center h-full text-gray-500">
-          <div className="text-6xl mb-4">🍟</div>
-          <p className="text-lg font-medium">Welcome to McDonald&apos;s!</p>
-          <p className="text-sm text-center mt-2 px-4">
-            Ask me about locations, menu items, or anything else you&apos;d like to know!
+          <div className="text-4xl md:text-6xl mb-2 md:mb-4">🍟</div>
+          <p className="text-base md:text-lg font-medium">
+            Welcome to McDonald&apos;s!
+          </p>
+          <p className="text-xs md:text-sm text-center mt-1 md:mt-2 px-2 md:px-4">
+            Ask me about locations, menu items, or anything else you&apos;d like
+            to know!
           </p>
         </div>
       ) : (
@@ -40,7 +43,7 @@ const ChatMessages: React.FC<ChatMessagesProps> = ({
       )}
       <div ref={messagesEndRef} />
     </div>
-  );
-};
+  )
+}
 
-export default ChatMessages; 
+export default ChatMessages

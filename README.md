@@ -94,6 +94,30 @@ A modern, responsive web application for finding McDonald's outlets in Malaysia 
    http://localhost:3000
    ```
 
+### 🔒 HTTPS Development (Required for Geolocation)
+
+**Firefox and some browsers require HTTPS for geolocation to work properly.**
+
+1. **Run with HTTPS**
+   ```bash
+   npm run dev:https
+   ```
+
+2. **Accept the security warning**
+   - Browser will show "Your connection is not private"
+   - Click **"Advanced"** → **"Proceed to localhost (unsafe)"**
+   - This is normal for local development with self-signed certificates
+
+3. **Access via HTTPS**
+   ```
+   https://localhost:3000
+   ```
+
+4. **Test geolocation**
+   - Click "Enable Location" in the chat interface
+   - Allow location permissions when prompted
+   - Firefox users: Location detection may take 30+ seconds
+
 ## ⚙️ Environment Variables
 
 | Variable | Description | Default | Required |

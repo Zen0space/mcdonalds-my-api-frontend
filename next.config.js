@@ -25,6 +25,18 @@ const nextConfig = {
     minimumCacheTTL: 60,
   },
 
+  // API proxy for development CORS
+  async rewrites() {
+    return process.env.NODE_ENV === 'development'
+      ? [
+          {
+            source: '/api/v1/:path*',
+            destination: `${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'}/api/v1/:path*`,
+          },
+        ]
+      : []
+  },
+
   // Disable custom headers (handled by netlify.toml)
   async headers() {
     return []

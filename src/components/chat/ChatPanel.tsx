@@ -35,7 +35,7 @@ const ChatPanel: React.FC<ChatPanelProps> = ({ chatSession, onClose }) => {
   })
 
   return (
-    <div className="w-96 h-[600px] bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col animate-slide-up">
+    <div className="w-[calc(100vw-2rem)] max-w-sm h-[70vh] max-h-[500px] md:w-96 md:h-[600px] md:max-h-none bg-white rounded-2xl shadow-2xl border border-gray-200 flex flex-col animate-slide-up">
       <ChatHeader
         onClose={onClose}
         onClear={chatSession.clearChat}
